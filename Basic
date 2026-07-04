@@ -1,0 +1,78 @@
+question no 1:
+
+find odd or even:
+    to find weather the given number is odd or even
+
+  if(num%2==0) even else odd 
+
+
+question no 2:
+
+Given two integers a and b in the form of strings. Return the last digit of a^b:
+
+
+        
+STEP 1: Handling the Base Case (b = 0)
+--------------------------------------
+if (b.equals("0"))
+    return 1;
+
+- What it does: Checks if the exponent string 'b' is equal to "0".
+- Why: Mathematically, any non-zero number raised to the power of 0 is 1 (a^0 = 1).
+
+STEP 2: Extracting the Last Digit of the Base
+---------------------------------------------
+int lastDigit = a.charAt(a.length() - 1) - '0';
+
+- What it does: Finds the last character of string 'a' and converts it into an integer.
+- Why: In multiplication, only the last digit of the numbers being multiplied 
+  determines the last digit of the result (e.g., 12 * 12 = 14[4], same as 2 * 2 = [4]).
+- The "- '0'" Trick: In Java, subtracting the character '0' from any numeric character 
+  converts it directly to its primitive integer representation via ASCII math 
+  (e.g., character '5' (ASCII 53) - character '0' (ASCII 48) = integer 5).
+
+STEP 3: Reducing the Massive Exponent Modulo 4
+----------------------------------------------
+int exp = 0;
+for (int i = 0; i < b.length(); i++) {
+    exp = (exp * 10 + (b.charAt(i) - '0')) % 4;
+}
+
+- What it does: Loops through the large string 'b' digit-by-digit to find (b % 4).
+- Why: Since 'b' can be hundreds of digits long, it cannot fit into a standard 
+  'int' or 'long'. This loop uses modular arithmetic to process the number piece by piece. 
+  By taking '% 4' at every iteration, 'exp' stays small, avoids numerical overflow, 
+  and accurately evaluates the final remainder of the entire string divided by 4.
+
+STEP 4: Adjusting the Remainder
+-------------------------------
+if (exp == 0)
+    exp = 4;
+
+- What it does: If the remainder 'exp' is 0, it resets it to 4.
+- Why: A remainder of 0 means 'b' is a perfect multiple of 4. If we left 'exp = 0', 
+  the next calculation loop would run 0 times and return 1, which is incorrect. 
+  Raising a base to its 4th power yields the exact same last digit as raising it 
+  to any multiple of 4.
+
+STEP 5: Calculating the Final Last Digit
+----------------------------------------
+int ans = 1;
+for (int i = 0; i < exp; i++) {
+    ans = (ans * lastDigit) % 10;
+}
+return ans;
+
+- What it does: Multiplies the extracted 'lastDigit' by itself 'exp' times 
+  (where 'exp' is now guaranteed to be 1, 2, 3, or 4).
+- Why: Applying '% 10' after every single multiplication step ensures we only keep 
+  the final trailing digit, keeping our execution clean, fast, and overflow-proof.
+
+--------------------------------------------------------------------------------
+4. ALGORITHM COMPLEXITY
+--------------------------------------------------------------------------------
+- Time Complexity: O(|b|) where |b| is the length of the exponent string 'b'. 
+  We only iterate through the string 'b' once.
+- Space Complexity: O(1) auxiliary space, as we only use a few basic integer variables.
+================================================================================
+
