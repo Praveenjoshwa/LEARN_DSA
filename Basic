@@ -109,3 +109,123 @@ return ans;
 - Space Complexity: O(1) auxiliary space, as we only use a few basic integer variables.
 ================================================================================
 
+
+
+
+question no 3:
+
+Given a positive integer n, count the number of digits in n that divide n evenly (i.e., without leaving a remainder). Return the total number of such digits.
+
+A digit d of n divides n evenly if the remainder when n is divided by d is 0 (n % d == 0).
+Digits of n should be checked individually. If a digit is 0, it should be ignored because division by 0 is undefined.
+
+
+
+
+
+
+class Solution {
+    static int evenlyDivides(int n) {
+        int num = n;
+        int a = n;
+        int count = 0;
+
+        while (a > 0) {
+            int digit = a % 10;
+            
+            // Check if digit is not zero and divides the original number evenly
+            if (digit != 0 && num % digit == 0) {
+                count++;
+            }
+            
+            a = a / 10; // Integer division removes the last digit
+        }
+        
+        return count;
+    }
+}
+
+
+======================================================================
+CODE EXPLANATION: EVENLY DIVIDES (FIND DIGITS)
+======================================================================
+
+PROBLEM GOAL:
+Given a number N, count how many of its individual digits can evenly 
+divide N (i.e., leave a remainder of 0). If a digit is 0, it must be 
+ignored to avoid a "division by zero" error.
+
+----------------------------------------------------------------------
+1. VARIABLES USED
+----------------------------------------------------------------------
+* num   : Stores the original value of N. We need this because we will 
+          be dividing N by its digits, so we must keep the original 
+          number unchanged.
+* a     : A copy of N that we will safely dismantle digit-by-digit 
+          in the loop.
+* count : A counter initialized to 0 that keeps track of how many 
+          digits successfully divide num.
+
+----------------------------------------------------------------------
+2. STEP-BY-STEP LOGIC
+----------------------------------------------------------------------
+
+[Step A] The Loop (while a > 0:)
+The code processes the number from right to left (last digit to first 
+digit). The loop continues as long as there are digits left to 
+process (a > 0).
+
+[Step B] Extracting the Last Digit (digit = a % 10)
+Using the modulo operator (% 10) extracts the very last digit of the 
+current number.
+Example: If a = 124, then 124 % 10 gives 4.
+
+[Step C] The Condition Check (if digit != 0 and num % digit == 0:)
+Before dividing, the code checks two crucial things:
+1. digit != 0: Ensures the digit is not zero (division by zero is 
+   mathematically impossible and crashes programs).
+2. num % digit == 0: Checks if the original number (num) is perfectly 
+   divisible by the extracted digit.
+
+-> If BOTH conditions are true, count increases by 1.
+
+[Step D] Removing the Last Digit (a = a // 10)
+Using floor division (// 10 in Python, / 10 in Java) chops off the 
+last digit from 'a', moving us to the next digit for the next 
+iteration.
+Example: If a = 124, then 124 // 10 becomes 12.
+
+[Step E] Return the Result
+Once 'a' becomes 0, the loop ends, and the function returns the 
+final value of 'count'.
+
+----------------------------------------------------------------------
+3. DRY RUN EXAMPLE (with N = 12)
+----------------------------------------------------------------------
+
+INITIALIZATION:
+* num   = 12
+* a     = 12
+* count = 0
+
+ITERATION 1:
+* digit = 12 % 10  ->  2
+* Condition Check  ->  Is 2 != 0 and 12 % 2 == 0? 
+                       Yes, both are True.
+* count becomes    ->  1
+* a = 12 // 10     ->  1
+
+ITERATION 2:
+* digit = 1 % 10   ->  1
+* Condition Check  ->  Is 1 != 0 and 12 % 1 == 0? 
+                       Yes, both are True.
+* count becomes    ->  2
+* a = 1 // 10      ->  0
+
+END OF LOOP:
+The loop terminates because 'a' is now 0. 
+The function returns the final count: 2.
+
+======================================================================
+
+
