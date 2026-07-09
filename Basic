@@ -229,3 +229,111 @@ The function returns the final count: 2.
 ======================================================================
 
 
+question 4;
+
+You are given an integer n. Your task is to reverse the digits, ensuring that the reversed number has no leading zeroes.
+
+
+
+class Solution {
+    public int reverseDigits(int n) {
+        // Code here
+        
+        int num =n;
+        int rev=0;
+       
+      
+        while (num != 0){
+            
+            int temp = num % 10;
+            
+            rev=rev*10 + temp;
+            
+            num=num/10;
+            
+            
+        }
+        
+        return rev;
+        
+        
+        
+    }
+}
+
+
+
+======================================================================
+CODE EXPLANATION: REVERSE DIGITS
+======================================================================
+
+PROBLEM GOAL:
+Given an integer N, reverse its digits. For example, if N = 123, 
+the program should return 321. If N = 400, it should return 4.
+
+----------------------------------------------------------------------
+1. VARIABLES USED
+----------------------------------------------------------------------
+* num  : A copy of N that we safely shrink by removing the last digit 
+         in each step until it becomes 0.
+* rev  : Stores the reversed number. It starts at 0 and builds up 
+         digit-by-digit.
+* temp : A temporary variable inside the loop to hold the last digit 
+         extracted from 'num'.
+
+----------------------------------------------------------------------
+2. STEP-BY-STEP LOGIC
+----------------------------------------------------------------------
+
+[Step A] The Loop (while num != 0)
+The loop keeps running as long as there are digits left in 'num'. 
+Using `num != 0` (instead of `num > 0`) is great because it allows 
+the code to handle negative numbers correctly too!
+
+[Step B] Extracting the Last Digit (temp = num % 10)
+The modulo operator (% 10) grabs the rightmost digit of the current 
+number.
+Example: If num = 123, then 123 % 10 gives 3.
+
+[Step C] Building the Reversed Number (rev = rev * 10 + temp)
+This is the core trick of the algorithm. Multiplying the current 
+'rev' by 10 shifts all its existing digits one place to the left 
+(creating a blank space at the units place), and then we add 'temp'.
+Example: If rev = 3 and temp = 2, doing (3 * 10) + 2 makes it 32.
+
+[Step D] Removing the Last Digit (num = num / 10)
+In Java, dividing an integer by 10 truncates the decimal part. This 
+effectively chops off the rightmost digit that we just processed.
+Example: If num = 123, then 123 / 10 becomes 12.
+
+[Step E] Return the Result
+Once 'num' hits 0, the loop ends, and the function returns 'rev'.
+
+----------------------------------------------------------------------
+3. DRY RUN EXAMPLE (with N = 123)
+----------------------------------------------------------------------
+
+INITIALIZATION:
+* num = 123
+* rev = 0
+
+ITERATION 1:
+* temp = 123 % 10      ->  3
+* rev  = (0 * 10) + 3  ->  3
+* num  = 123 / 10      ->  12
+
+ITERATION 2:
+* temp = 12 % 10       ->  2
+* rev  = (3 * 10) + 2  ->  32
+* num  = 12 / 10       ->  1
+
+ITERATION 3:
+* temp = 1 % 10        ->  1
+* rev  = (32 * 10) + 1 ->  321
+* num  = 1 / 10        ->  0
+
+END OF LOOP:
+The loop terminates because 'num' is now 0. 
+The function returns the final reversed number: 321.
+
+======================================================================
