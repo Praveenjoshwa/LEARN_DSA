@@ -337,3 +337,135 @@ The loop terminates because 'num' is now 0.
 The function returns the final reversed number: 321.
 
 ======================================================================
+
+
+
+
+
+question 5:
+
+
+You are given a 3-digit number n, Find whether it is an Armstrong number or not.
+
+An Armstrong number of three digits is a number such that the sum of the cubes of its digits is 
+equal to the number itself. 371 is an Armstrong number since 33 + 73 + 13 = 371. 
+
+
+
+
+
+class Solution {
+    static boolean armstrongNumber(int n) {
+        // code here
+        
+        
+        int num = n;
+        int red=n;
+        int count =0;
+        int amg=0;
+        
+        
+        
+        if(num == 0){
+            count=count+1;
+        }
+        else{
+            while(num > 0){
+                count=count+1;
+                num=num/10;
+            }
+        }
+        
+        
+        for(int i=0;i<count;i++){
+            
+            int mod = red%10;
+            amg=amg+ (int) Math.pow(mod,count);
+            
+            red=red/10;
+            
+            
+        } 
+        
+        return amg==n;
+        
+        
+        
+        
+    }
+}
+
+
+======================================================================
+CODE EXPLANATION: ARMSTRONG NUMBER CHECKER
+======================================================================
+
+PROBLEM GOAL:
+An Armstrong number (like 153 or 1634) is a number that equals the sum 
+of its own digits each raised to the power of the total number of digits.
+Example: 153 has 3 digits. 1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153.
+The program returns true if N is an Armstrong number, and false otherwise.
+
+----------------------------------------------------------------------
+1. VARIABLES USED
+----------------------------------------------------------------------
+* num   : A temporary copy of N used specifically to count the digits.
+* red   : Another copy of N used to extract digits and calculate the sum.
+* count : Keeps track of the total number of digits in N.
+* amg   : Accumulates the sum of each digit raised to the power of 'count'.
+* mod   : Holds the extracted last digit during each loop iteration.
+
+----------------------------------------------------------------------
+2. STEP-BY-STEP LOGIC
+----------------------------------------------------------------------
+
+[Step A] Counting the Digits (The first if-else & while block)
+Before calculating the powers, we must know how many digits N has.
+- If num == 0: 'count' becomes 1.
+- Else: The while loop divides 'num' by 10 continuously until it hits 0, 
+  adding 1 to 'count' for every division.
+
+[Step B] Calculating the Armstrong Sum (The for loop)
+The loop runs exactly 'count' times (once for each digit):
+1. mod = red % 10          -> Extracts the rightmost digit.
+2. Math.pow(mod, count)    -> Raises this digit to the power of 'count'.
+3. amg = amg + ...         -> Adds this calculated value to our running total.
+4. red = red / 10          -> Drops the last digit to ready the next one.
+
+[Step C] The Final Comparison (return amg == n)
+Compares the final calculated sum ('amg') with the original input ('n'). 
+Returns 'true' if they match, and 'false' if they don't.
+
+----------------------------------------------------------------------
+3. DRY RUN EXAMPLE (with N = 153)
+----------------------------------------------------------------------
+
+INITIALIZATION:
+* num = 153, red = 153, count = 0, amg = 0
+
+STEP A: COUNTING DIGITS
+* Loop runs 3 times as 153 drops to 15, then 1, then 0.
+* Result: count = 3
+
+STEP B: CALCULATING ARMSTRONG SUM (Loop runs 3 times)
+
+* Iteration 1:
+  - mod = 153 % 10             -> 3
+  - amg = 0 + (3^3) = 0 + 27   -> 27
+  - red = 153 / 10             -> 15
+
+* Iteration 2:
+  - mod = 15 % 10              -> 5
+  - amg = 27 + (5^3) = 27 + 125-> 152
+  - red = 15 / 10              -> 1
+
+* Iteration 3:
+  - mod = 1 % 10               -> 1
+  - amg = 152 + (1^3) = 152 + 1-> 153
+  - red = 1 / 10               -> 0
+
+STEP C: COMPARISON
+* Is amg == n? (Does 153 == 153?) 
+* Result: true
+
+======================================================================
